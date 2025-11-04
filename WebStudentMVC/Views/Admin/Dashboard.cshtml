@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>Welcome to the Admin Portal</h3>
+<p>This is the main content area where you can manage your academic system.</p>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Users</h5>
+                <p class="card-text">Manage students, teachers and staff accounts</p>
+                <a asp-controller="Admin" asp-action="AllUsersList" class="btn btn-primary">Go to User Management</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Classes</h5>
+                <p class="card-text">View and manage class schedules and enrollments</p>
+                <a href="#" class="btn btn-primary">Go to Class Management</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Reports</h5>
+                <p class="card-text">Generate academic reports and analytics</p>
+                <a href="#" class="btn btn-primary">View Reports</a>
+            </div>
+        </div>
+    </div>
+</div>

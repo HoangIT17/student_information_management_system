@@ -1,0 +1,40 @@
+@model WebStudentMVC.ViewModels.EditUserViewModel
+
+@{
+    ViewData["Title"] = "All Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit User Role</h1>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">User ID</dt>
+            <dd class="col-sm-8">@Model.UserId</dd>
+
+            <dt class="col-sm-4">Full Name</dt>
+            <dd class="col-sm-8">@Model.FullName</dd>
+
+            <dt class="col-sm-4">Email</dt>
+            <dd class="col-sm-8">@Model.Email</dd>
+        </dl>
+        <hr />
+        <form asp-action="EditUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" />
+             <div class="form-group mb-3">
+                <label asp-for="Role" class="control-label"></label>
+                <select asp-for="Role" asp-items="@(new SelectList(ViewBag.Roles))" class="form-control"></select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save Role" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AllUsersList">Back to List</a>
+</div>

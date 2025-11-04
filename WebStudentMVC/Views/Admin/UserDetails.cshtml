@@ -1,0 +1,43 @@
+@model WebStudentMVC.ViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light rounded h-100 p-4 shadow-sm">
+        <h4 class="mb-4">@ViewData["Title"]</h4>
+
+        <dl class="row">
+            <dt class="col-sm-3">User ID</dt>
+            <dd class="col-sm-9">@Model.UserId</dd>
+
+            <dt class="col-sm-3">Full Name</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+            
+            <dt class="col-sm-3">Role</dt>
+            <dd class="col-sm-9">@Model.Role</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                 @if (Model.Role == "Teacher")
+                {
+                    @(Model.IsApproved ? "Approved" : "Pending Approval")
+                }
+                else
+                {
+                    <text>N/A</text>
+                }
+            </dd>
+        </dl>
+        
+        <div>
+            <a asp-action="EditUser" asp-route-userId="@Model.UserId" class="btn btn-warning">Edit</a>
+            <a asp-action="AllUsersList" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

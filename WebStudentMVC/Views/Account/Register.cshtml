@@ -1,0 +1,185 @@
+﻿@using WebStudentMVC.ViewModels
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HHTL SCHOOL</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .left-panel {
+            background: linear-gradient(180deg, #ff7f50, #ff4500);
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            height: 80px;
+        }
+
+        .portal-title {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .portal-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .illustration {
+            margin-top: 25px;
+            width: 260px;
+            border-radius: 20px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .btn-lg {
+            border-radius: 10px;
+        }
+
+        .switch-link {
+            font-size: 14px;
+            display: block;
+            margin-top: 15px;
+        }
+
+        .input-group-text {
+            background-color: #fff;
+            border-right: none;
+        }
+
+        .form-control:focus {
+            border-color: #ff7f50;
+            box-shadow: 0 0 8px rgba(255,127,80,0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo góc trái -->
+    @* <img src="~/images/logo.jpg" alt="HHTL Logo" class="logo" /> *@
+
+    <div class="row vh-100">
+        <!-- Cột bên trái: Form đăng ký -->
+        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+            <div class="auth-card">
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-body p-4">
+                        <h3 class="text-center text-warning mb-4">Register</h3>
+
+                        <form asp-action="Register" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                            <!-- Full Name -->
+                            <div class="mb-3 input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                <input asp-for="Name" class="form-control form-control-lg" placeholder="Full Name" />
+                            </div>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+
+                            <!-- Email -->
+                            <div class="mb-3 input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                <input asp-for="Email" class="form-control form-control-lg" placeholder="Email" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+
+                            <!-- Password -->
+                            <div class="mb-3 input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                <input asp-for="Password" class="form-control form-control-lg" type="password" placeholder="Password" />
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+
+                            <!-- Confirm Password -->
+                            <div class="mb-3 input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                <input asp-for="ConfirmPassword" class="form-control form-control-lg" type="password" placeholder="Confirm Password" />
+                            </div>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+                            <!-- Role -->
+                            <div class="mb-3 input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-user-graduate"></i></span>
+                                <select asp-for="Role" class="form-control form-control-lg">
+                                    <option value="">-- Select Role --</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Student">Student</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+
+                            <!-- Submit -->
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-warning btn-lg">
+                                    <i class="fa-solid fa-user-plus"></i> Register
+                                </button>
+                            </div>
+
+                            <hr />
+
+                            <!-- Link sang Login -->
+                            <a asp-controller="Account" asp-action="Login" class="switch-link text-center text-decoration-none">
+                                Already have an account? Login
+                            </a>
+
+                            <!-- Back link -->
+                            <div class="text-center mt-3">
+                                <a asp-controller="Home" asp-action="Index" class="text-decoration-none">
+                                    <i class="fa-solid fa-arrow-left"></i> Back
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột bên phải: Panel giới thiệu -->
+        <div class="col-md-6 left-panel d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-school mb-3" style="font-size:60px; color:#ffd27f;"></i>
+            <h3 class="portal-title">Student Information Management System</h3>
+            <p class="portal-subtitle">Welcome to Welcome to Academic Portal</p>
+            <img src="~/images/student.jpg" class="illustration" />
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

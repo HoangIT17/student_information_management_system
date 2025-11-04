@@ -1,0 +1,221 @@
+﻿@using WebStudentMVC.ViewModels
+@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HHTL SCHOOL</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .left-panel {
+            background: linear-gradient(180deg, #ff7f50, #ff4500);
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            height: 100px;
+            z-index: 1000;
+        }
+
+        .portal-title {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .portal-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .illustration {
+            margin-top: 25px;
+            width: 260px;
+            border-radius: 20px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .btn-lg {
+            border-radius: 10px;
+        }
+
+        .switch-link {
+            font-size: 14px;
+            display: block;
+            margin-top: 15px;
+        }
+
+        .input-group-text {
+            background-color: #fff;
+            border-right: none;
+        }
+
+        .form-control:focus {
+            border-color: #ff7f50;
+            box-shadow: 0 0 8px rgba(255,127,80,0.5);
+        }
+
+        .remember-forgot-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .form-check {
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .forgot-password {
+            flex-shrink: 0;
+        }
+
+        /* Responsive adjustments */
+        @@media (max-width: 576px) {
+            .remember-forgot-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .forgot-password {
+                align-self: flex-end;
+            }
+
+            .logo {
+                height: 70px;
+                top: 15px;
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo góc trái -->
+    @* <img src="~/images/logo.jpg" alt="HHTL Logo" class="logo" /> *@
+
+    <div class="row vh-100">
+        <!-- Cột bên trái: Form đăng nhập -->
+        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+            <div class="auth-card">
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-body p-4">
+                        <h3 class="text-center text-warning mb-4">Login</h3>
+
+                        <form asp-action="Login" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                            <!-- Email -->
+                            <div class="mb-3 input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                <input asp-for="Email" class="form-control form-control-lg" placeholder="Email" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+
+                            <!-- Password -->
+                            <div class="mb-3 input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                <input asp-for="Password" class="form-control form-control-lg" type="password" placeholder="Password" />
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+
+                            <!-- Remember Me và Forgot Password - Đã được nhóm và căn chỉnh -->
+                            <div class="remember-forgot-row">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input asp-for="RememberMe" class="form-check-input" />
+                                        @Html.DisplayNameFor(a => a.RememberMe)
+                                    </label>
+                                </div>
+                                <div class="forgot-password">
+                                    <a asp-controller="Account" asp-action="VerifyEmail" class="text-decoration-none">
+                                        Forgot Password?
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-warning btn-lg">
+                                    <i class="fa-solid fa-sign-in-alt"></i> Login
+                                </button>
+                            </div>
+
+                            <hr />
+
+                            <!-- Social login -->
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-danger btn-lg" type="button">
+                                    <i class="fa-brands fa-google"></i> Login with Google
+                                </button>
+                                <a href="#" class="btn btn-outline-primary btn-lg">
+                                    <i class="fa-solid fa-id-card"></i> Sign in with FEID
+                                </a>
+                            </div>
+
+                            <!-- Register link -->
+                            <a asp-controller="Account" asp-action="Register" class="switch-link text-center text-decoration-none">
+                                Don't have an account? Register
+                            </a>
+
+                            <!-- Back link -->
+                            <div class="text-center mt-3">
+                                <a asp-controller="Home" asp-action="Index" class="text-decoration-none">
+                                    <i class="fa-solid fa-arrow-left"></i> Back
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột bên phải: Panel giới thiệu -->
+        <div class="col-md-6 left-panel d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-school mb-3" style="font-size:60px; color:#ffd27f;"></i>
+            <h3 class="portal-title">Student Information Management System</h3>
+            <p class="portal-subtitle">Welcome to Welcome to Academic Portal</p>
+            <img src="~/images/student.jpg" class="illustration" />
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

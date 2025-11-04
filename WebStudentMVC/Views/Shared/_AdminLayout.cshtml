@@ -1,0 +1,215 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<Users> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<!DOCTYPE html>
+<html lang="vi" style="height: 100%;">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Portal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout_admin.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+</head>
+<body>
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="container-fluid">
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar" id="sidebar">
+                <div class="logo-section text-center">
+                    <i class="fas fa-graduation-cap logo-icon fa-3x mb-3"></i>
+                    <h5 class="project-name text-white mb-1">Student Information Management System</h5>
+                    <p class="project-subtitle text-light mb-0">Admin System</p>
+                </div>
+
+                <nav class="nav flex-column p-3">
+                    <a class="nav-link py-3" asp-controller="Admin" asp-action="HomePage">
+                        <i class="fas fa-tachometer-alt me-3"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <!-- Account Management with submenu -->
+                    <div class="menu-item">
+                        <a class="nav-link py-3 d-flex justify-content-between align-items-center" href="#" data-submenu="accountManagementSubmenu">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-users me-2"></i>
+                                <span style="font-size: 0.9rem;">Account Management</span>
+                            </div>
+                            <i class="fas fa-chevron-right menu-toggle"></i>
+                        </a>
+                        <div class="submenu" id="accountManagementSubmenu">
+                            <a class="nav-link py-2" asp-controller="Admin" asp-action="AllUsersList">
+                                <i class="fas fa-user-check me-3"></i>
+                                <span>User Management</span>
+                            </a>
+                            <a class="nav-link py-2" asp-controller="Admin" asp-action="ApprovedTeacher">
+                                <i class="fas fa-user me-3"></i>
+                                <span>Teacher Approval</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a class="nav-link py-3" asp-controller="Admin" asp-action="CourseManagement">
+                        <i class="fas fa-book me-3"></i>
+                        <span>Course Management</span>
+                    </a>
+
+                    <!-- Class Management with submenu -->
+                    <div class="menu-item">
+                        <a class="nav-link py-3 d-flex justify-content-between align-items-center" href="#" data-submenu="classManagementSubmenu">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-chalkboard-teacher me-2"></i>
+                                <span style="font-size: 0.9rem;">Class Management</span>
+                            </div>
+                            <i class="fas fa-chevron-right menu-toggle"></i>
+                        </a>
+                        <div class="submenu" id="classManagementSubmenu">
+                            <a class="nav-link py-2" asp-controller="Admin" asp-action="ClassManagement">
+                                <i class="fas fa-chalkboard me-3"></i>
+                                <span>Class Management</span>
+                            </a>
+                            <a class="nav-link py-2" asp-controller="Admin" asp-action="EnrollmentReport">
+                                <i class="fas fa-chart-bar me-3"></i>
+                                <span>Enrollment Report</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Reports with submenu -->
+                    <div class="menu-item">
+                        <a class="nav-link py-3 d-flex justify-content-between align-items-center" href="#" data-submenu="reportsSubmenu">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-chart-line me-2"></i>
+                                <span style="font-size: 0.9rem;">Reports</span>
+                            </div>
+                            <i class="fas fa-chevron-right menu-toggle"></i>
+                        </a>
+                        <div class="submenu" id="reportsSubmenu">
+                            <a class="nav-link py-2" asp-controller="Admin" asp-action="AttendanceReport">
+                                <i class="fas fa-user-check me-3"></i>
+                                <span>Attendance Report</span>
+                            </a>
+                            <a class="nav-link py-2" asp-controller="Admin" asp-action="MarkReport">
+                                <i class="fas fa-chart-bar me-3"></i>
+                                <span>Mark Report</span>
+                            </a>
+                            <a class="nav-link py-2" asp-controller="Admin" asp-action="TopStudents">
+                                <i class="fas fa-trophy me-3"></i>
+                                <span>Top Students</span>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Main Container -->
+            <div class="col-md-9 col-lg-10 main-container">
+                <!-- Header -->
+                <header class="header bg-white">
+                    <div class="d-flex justify-content-between align-items-center w-100 h-100 px-4">
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-light d-md-none me-3" id="mobileToggle" style="border: 1px solid #dee2e6; border-radius: 8px;">
+                                <i class="fas fa-bars text-muted"></i>
+                            </button>
+                            <div>
+                                <h1 class="h5 mb-0 text-dark fw-bold">@ViewData["Title"]</h1>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-3">
+                            <!-- User info and logout section -->
+                            <div class="d-none d-sm-flex align-items-center bg-light rounded-pill px-3 py-1">
+                                <i class="fas fa-user-circle text-muted me-2"></i>
+                                <span class="text-dark fw-medium">Hello, @user?.FullName!</span>
+                            </div>
+
+                            <form class="d-inline" asp-controller="Account" asp-action="Logout">
+                                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                                    <i class="fas fa-sign-out-alt me-1"></i><span class="d-none d-sm-inline">Logout</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Main Content Area -->
+                <main>
+                    <div class="content-area">
+                        @RenderBody()
+                    </div>
+                </main>
+
+                <!-- Footer -->
+                <footer class="main-footer bg-white">
+                    <div class="container-fluid h-100">
+                        <div class="row align-items-center h-100 px-3">
+                            <div class="col-12 col-md-6 text-center text-md-start">
+                                <span class="text-muted fw-medium small">© 2025 - Academic Portal</span>
+                            </div>
+                            <div class="col-12 col-md-6 text-center text-md-end">
+                                <small class="text-muted">
+                                    <i class="fas fa-code-branch me-1"></i>v1.0
+                                    <i class="fas fa-clock ms-2 me-1"></i>Nov 2025
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Mobile toggle
+            $('#mobileToggle').click(function() {
+                $('#sidebar').toggleClass('show');
+                $('#sidebarOverlay').toggleClass('show');
+            });
+
+            // Close sidebar when clicking overlay
+            $('#sidebarOverlay').click(function() {
+                $('#sidebar').removeClass('show');
+                $(this).removeClass('show');
+            });
+
+            // Submenu toggle
+            $('[data-submenu]').click(function(e) {
+                e.preventDefault();
+                var submenuId = $(this).data('submenu');
+                $('#' + submenuId).toggleClass('show');
+                $(this).find('.menu-toggle').toggleClass('rotate');
+            });
+
+            // Active page highlight
+            var currentPath = window.location.pathname;
+            $('.nav-link').each(function() {
+                var linkPath = $(this).attr('href');
+                if (linkPath && currentPath.includes(linkPath)) {
+                    $(this).addClass('active');
+                    $(this).closest('.submenu').addClass('show').prev().find('.menu-toggle').addClass('rotate');
+                }
+            });
+
+            // Close mobile menu on link click
+            $('.nav-link').click(function() {
+                if ($(window).width() < 768) {
+                    $('#sidebar').removeClass('show');
+                    $('#sidebarOverlay').removeClass('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
